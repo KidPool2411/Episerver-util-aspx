@@ -11,8 +11,6 @@
 <%@ Import Namespace="System.Configuration.Provider" %>
 <%@ Import Namespace="System.Linq" %>
 <%@ Import Namespace="System.Web" %>
-<%@ Import Namespace="System.IO" %>
-<%@ Import Namespace="System.IO.Compression" %>
 
 <%@ Import Namespace="Mediachase.Commerce.Catalog" %>
 <%@ Import Namespace="EPiServer.Core" %>
