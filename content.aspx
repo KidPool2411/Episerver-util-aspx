@@ -43,7 +43,7 @@
             Log("Type not found");
             return;
         }
-        var contentUsages = _contentListDBAccessor().ListContentOfContentType(pageType,false); // get crash here
+        var contentUsages = _contentListDBAccessor().ListContentOfContentType(pageType,false);
         foreach(var content in contentUsages)
         {
             Log(content.Name);
