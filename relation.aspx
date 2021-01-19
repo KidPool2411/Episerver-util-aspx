@@ -24,9 +24,20 @@
 <form id="form1" runat="server" enctype="multipart/form-data">
     <h2><asp:Button runat="server" OnClick="RemoveParentByNodeId" Text="Remove Parent By NodeId" /></h2>
     <h2><asp:Button runat="server" OnClick="RemoveParentByCatalogId" Text="Remove Parent By CatalogId" /></h2>
+    <h2><asp:Button runat="server" OnClick="GetObjectId" Text="Get Object Id" /></h2>
 </form>
 
 <script language="C#" type="text/C#" runat="server">
+    void GetObjectId(object sender, EventArgs e)
+    {
+        var id = 1073741826;
+
+        var referenceConverter = ServiceLocator.Current.GetInstance<ReferenceConverter>();
+        var objectId = referenceConverter.GetObjectId(new ContentReference(id));
+
+        Log("GetObjectId: " + objectId.ToString());
+    }
+
     void RemoveParentByNodeId(object sender, EventArgs e)
     {
         int nodeId = 1073741836;
