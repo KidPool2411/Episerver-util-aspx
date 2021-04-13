@@ -25,12 +25,41 @@
     <h2><asp:Button runat="server" OnClick="RemoveParentByNodeId" Text="Remove Parent By NodeId" /></h2>
     <h2><asp:Button runat="server" OnClick="RemoveParentByCatalogId" Text="Remove Parent By CatalogId" /></h2>
     <h2><asp:Button runat="server" OnClick="GetObjectId" Text="Get Object Id" /></h2>
+    <h2><asp:Button runat="server" OnClick="GetChildRelations" Text="Get Child Relations" /></h2>
+    <h2><asp:Button runat="server" OnClick="GetParentRelations" Text="Get Parent Relations" /></h2>
 </form>
 
 <script language="C#" type="text/C#" runat="server">
+    void GetChildRelations(object sender, EventArgs e)
+    {
+        int nodeId = 1073741825;
+
+        var _relationRepository = ServiceLocator.Current.GetInstance<IRelationRepository>();
+        var parentLink = new ContentReference(nodeId, 0, ReferenceConverter.CatalogProviderKey);
+        var currentRelations = _relationRepository.GetChildren<Relation>(parentLink).ToList();
+
+        foreach (var relation in currentRelations)
+        {
+            Log(relation.Parent.ID.ToString() + " => " + relation.Child.ID.ToString());
+        }
+    }
+    void GetParentRelations(object sender, EventArgs e)
+    {
+        int nodeId = 1073741825;
+
+        var _relationRepository = ServiceLocator.Current.GetInstance<IRelationRepository>();
+        var parentLink = new ContentReference(nodeId, 0, ReferenceConverter.CatalogProviderKey);
+        var currentRelations = _relationRepository.GetParents<Relation>(parentLink).ToList();
+
+        foreach (var relation in currentRelations)
+        {
+            Log(relation.Parent.ID.ToString() + " => " + relation.Child.ID.ToString());
+        }
+    }
+
     void GetObjectId(object sender, EventArgs e)
     {
-        var id = 1073741826;
+        var id = 1073741832;
 
         var referenceConverter = ServiceLocator.Current.GetInstance<ReferenceConverter>();
         var objectId = referenceConverter.GetObjectId(new ContentReference(id));
@@ -50,7 +79,7 @@
         var relation = currentRelations.FirstOrDefault(r => r.Child.ID == childId);
         if (relation == null)
         {
-           Log("ERROR: Relation not found");
+            Log("ERROR: Relation not found");
         }
         else
         {
@@ -71,7 +100,7 @@
         var relation = currentRelations.FirstOrDefault(r => referenceConverter.GetObjectId(r.TargetCatalog) == catalogId);
         if (relation == null)
         {
-           Log("ERROR: Relation not found");
+            Log("ERROR: Relation not found");
         }
         else
         {
